@@ -261,9 +261,7 @@ async function createLink() {
     };
     const selectedRoute = routeMap[linkType] || routeMap.download;
     const fullLink = location.origin + selectedRoute.path + "?id=" + encodeURIComponent(data.id);
-    const decodedStr = safeDecodeBase64(data.id);
-    const parts = decodedStr.split('|');
-    const expTime = parseInt(parts[1], 36);
+    const expTime = data.exp;
     const createdAt = Date.now();
     const ttlText = formatDuration(ttlMinutes);
 

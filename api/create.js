@@ -1,4 +1,6 @@
-export default function handler(req, res) {
+import { getRedis } from './redis.js';
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method không hợp lệ' });
   }
@@ -18,8 +20,26 @@ export default function handler(req, res) {
 
   const safeMinutes = Math.floor(minutes);
   const expTime = Date.now() + safeMinutes * 60 * 1000;
-  const payloadStr = cleanName + '|' + expTime.toString(36);
+  
+  // Generate a short 6-character random ID
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let shortId = '';
+  for (let i = 0; i < 6; i++) {
+    shortId += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
 
-  const encoded = Buffer.from(payloadStr).toString('base64');
-  return res.status(200).json({ id: encoded });
+  const payload = {
+    name: cleanName,
+    exp: expTime
+  };
+
+  try {
+    const redis = await getRedis();
+    // Save to Redis with an expiration time (in seconds)
+    await redis.set(`link:${shortId}`, JSON.stringify(payload), { EX: safeMinutes * 60 });
+    return res.status(200).json({ id: shortId, exp: expTime });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Lỗi khi lưu vào Database' });
+  }
 }

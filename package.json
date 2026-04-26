@@ -1,5 +1,5 @@
-{
   "dependencies": {
+    "redis": "^4.6.10",
     "uuid": "^9.0.0"
   }
 }

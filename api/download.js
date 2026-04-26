@@ -28,29 +28,43 @@ function makeContentDisposition(filename) {
   return `attachment; filename="${fallback}"; filename*=UTF-8''${encoded}`;
 }
 
-export default function handler(req, res) {
+import { getRedis } from './redis.js';
+
+export default async function handler(req, res) {
   const { id } = req.query || {};
 
   if (!id) {
     return res.status(400).send('Thiếu dữ liệu');
   }
 
-  let rawName = 'Khách';
-  let exp = 0;
+  let data;
   try {
-    const decodedStr = Buffer.from(id, 'base64').toString();
-    const parts = decodedStr.split('|');
-    rawName = String(parts[0] || 'Khách').trim() || 'Khách';
-    exp = parseInt(parts[1], 36);
-    if (!parts[0] || isNaN(exp)) throw new Error('Invalid format');
+    const redis = await getRedis();
+    const rawData = await redis.get(`link:${id}`);
+    if (rawData) {
+      data = JSON.parse(rawData);
+    }
   } catch {
-    return res.status(400).send('Dữ liệu không hợp lệ');
+    return res.redirect('/download.html?error=error');
   }
 
-  if (Date.now() > exp) {
-    return res.status(410).send('Hết hạn');
+  if (!data) {
+    return res.redirect('/download.html?error=used');
   }
 
+  if (Date.now() > data.exp) {
+    return res.redirect('/download.html?error=expired');
+  }
+
+  // Đánh dấu đã sử dụng bằng cách xoá key khỏi database
+  try {
+    const redis = await getRedis();
+    await redis.del(`link:${id}`);
+  } catch (e) {
+    console.error("Failed to delete key", e);
+  }
+
+  const rawName = String(data.name || 'Khách').trim() || 'Khách';
   const displayName = escapeXml(rawName);
   const safeSlug = makeAsciiSlug(rawName);
 

@@ -148,29 +148,38 @@
 
             if (!idParam) return showError("❌ LINK KHÔNG HỢP LỆ");
 
-            try {
-                let decodedStr = safeDecodeB64(idParam);
-                let parts = decodedStr.split('|');
-                let userName = parts[0] || "Khách VIP";
-                let exp = parseInt(parts[1], 36);
+            // Kiểm tra xem có bị lỗi từ API redirect về không
+            const errorParam = params.get("error");
+            if (errorParam === "used") {
+                return showError("❌ LINK NÀY ĐÃ ĐƯỢC SỬ DỤNG<br><span style='font-size: 12px; font-weight: normal; color: #ccc'>Mỗi link chỉ tải được 1 lần. Vui lòng liên hệ Admin để nhận link mới.</span>");
+            } else if (errorParam === "expired") {
+                return showError("❌ LIÊN KẾT ĐÃ HẾT HẠN<br><span style='font-size: 12px; font-weight: normal; color: #ccc'>Vui lòng liên hệ Admin để nhận link mới.</span>");
+            } else if (errorParam) {
+                return showError("❌ LỖI HỆ THỐNG<br><span style='font-size: 12px; font-weight: normal; color: #ccc'>Không thể xác thực link này.</span>");
+            }
 
-                if (!userName || isNaN(exp)) throw new Error("Invalid format");
+            try {
+                // Gọi API để kiểm tra link còn sống không
+                const res = await fetch("/api/info?id=" + encodeURIComponent(idParam));
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || "Link không hợp lệ hoặc đã sử dụng");
+                }
+
+                const userName = data.name || "Khách VIP";
+                const exp = data.exp;
 
                 // Thay tên động
                 document.getElementById("greetingBox").innerHTML = `Xin chào, <b>${userName}</b> 👋<br>Đây là hướng dẫn dành riêng cho bạn.`;
                 document.getElementById("footerText").innerHTML = `<p>Link này dành riêng cho ${userName}.</p>`;
 
-                // Kiểm tra hết hạn
-                if (Date.now() > exp) {
-                    return showError("❌ LIÊN KẾT ĐÃ HẾT HẠN<br><span style='font-size: 12px; font-weight: normal; color: #ccc'>Vui lòng liên hệ Admin để lấy link mới.</span>");
-                }
-
-                // Bật nút tải và đếm ngược
+                // Cập nhật nút tải
                 setupDownloadButton();
                 startCountdown(exp);
 
             } catch (e) {
-                showError("❌ DỮ LIỆU KHÔNG HỢP LỆ");
+                showError("❌ " + e.message);
             }
         }
 
