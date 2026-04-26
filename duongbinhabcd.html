@@ -283,7 +283,7 @@ async function createLink() {
     `;
 
     startCountdown(expTime);
-    saveToHistory(name, fullLink, expTime, decodedData.ttlMinutes || ttlMinutes, createdAt, linkType, selectedRoute.label);
+    saveToHistory(name, fullLink, expTime, ttlMinutes, createdAt, linkType, selectedRoute.label);
     nameInput.value = "";
     ttlInput.value = "";
     linkTypeInput.value = "download";
