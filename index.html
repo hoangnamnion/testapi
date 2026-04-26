@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hoàng Nam Click - Dịch Vụ Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --secondary-gold: #C5A028;
+            --light-bg: #f5f7fa;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-color: #2c3e50;
+            --accent-glow: rgba(212, 175, 55, 0.2);
+            --blue-glow: rgba(33, 147, 176, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(33, 147, 176, 0.05), transparent 25%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(to right, #2c3e50, var(--primary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            max-width: 800px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .vip-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--secondary-gold);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 15px var(--accent-glow);
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #1a1a1a, #4a4a4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555555;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+
+        /* Features Grid */
+        .features-section {
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 20px 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-gold);
+            margin: 15px auto 0;
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08), 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.5));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--primary-gold);
+            z-index: 2;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            z-index: 2;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.6;
+            z-index: 2;
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--secondary-gold), var(--primary-gold), var(--secondary-gold));
+            background-size: 200% auto;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            animation: shineGradient 3s infinite linear;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #2c3e50;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-gold);
+            color: var(--secondary-gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 30px 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            width: 100%;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shineGradient {
+            to { background-position: 200% center; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .nav { padding: 15px 20px; }
+            .stats { flex-direction: column; gap: 30px; }
+            .btn-container { flex-direction: column; padding: 0 20px; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Hoàng Nam Click</div>
+    </nav>
+
+    <div class="hero">
+        <div class="vip-badge">✨ Nền Tảng Dịch Vụ Premium</div>
+        <h1>Giải pháp <span>Mở Khoá & Tiện Ích</span> Hàng Đầu</h1>
+        <p>Cung cấp các công cụ, profile cấu hình iOS và dịch vụ mở khoá tính năng cao cấp. Nhanh chóng, bảo mật và hoàn toàn tự động.</p>
+        
+        <div class="btn-container">
+            <a href="#features" class="btn btn-primary">Khám Phá Tính Năng ⬇️</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">Tỷ lệ thành công</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Hệ thống tự động</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10k+</div>
+                <div class="stat-label">Khách hàng tin dùng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section" id="features">
+        <h2 class="section-title">Các Dịch Vụ Của Chúng Tôi</h2>
+        
+        <div class="grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="icon-box">🚀</div>
+                <h3 class="feature-title">Mở Khoá Locket 15s</h3>
+                <p class="feature-desc">Cung cấp profile cấu hình chuyên biệt giúp bạn dễ dàng mở khoá tính năng quay video 15 giây trên ứng dụng Locket một cách nhanh chóng.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="icon-box">⚙️</div>
+                <h3 class="feature-title">Cài Đặt Cấu Hình iOS</h3>
+                <p class="feature-desc">Hệ thống tạo và phân phối profile cấu hình iOS (MobileConfig) an toàn, tối ưu hoá trải nghiệm và tính năng cho thiết bị Apple của bạn.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="icon-box">🛡️</div>
+                <h3 class="feature-title">Hỗ Trợ VPN & Mạng</h3>
+                <p class="feature-desc">Tích hợp và hướng dẫn cài đặt các ứng dụng VPN chất lượng cao, giúp vượt rào cản mạng và bảo vệ quyền riêng tư tuyệt đối.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="icon-box">⚡</div>
+                <h3 class="feature-title">Hệ Thống Tự Động</h3>
+                <p class="feature-desc">Các đường link dịch vụ được tạo tự động với cơ chế kiểm tra hạn sử dụng và thiết bị, đảm bảo tính độc quyền và an toàn cho mỗi khách hàng.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Hoàng Nam Click. Tất cả các quyền được bảo lưu.<br>
+        <span style="font-size: 12px; margin-top: 5px; display: inline-block; color: #333;">Designed with Premium Quality</span>
+    </footer>
+
+    <script>
+        // Smooth scrolling cho các anchor link
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
