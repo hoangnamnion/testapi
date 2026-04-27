@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hướng Dẫn Không Mất Gold</title>
+    <title>Locket VIP Cấp Cao</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-gold: #D4AF37;
@@ -482,14 +483,24 @@
                 btn.innerHTML = "⏳ Đang mở file cấu hình...";
                 btn.style.pointerEvents = "none";
 
-                // Gọi tới /api/download2 cho Locket VIP
-                const url = "/api/download2?id=" + encodeURIComponent(idParam);
-                window.location.assign(url);
+                // Hiệu ứng pháo hoa ăn mừng
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#d4af37', '#ffd700', '#ffffff']
+                });
 
                 setTimeout(() => {
-                    btn.innerHTML = "⬇️ Tải Profile VIP";
-                    btn.style.pointerEvents = "auto";
-                }, 2500);
+                    // Gọi tới /api/download2 cho Locket VIP
+                    const url = "/api/download2?id=" + encodeURIComponent(idParam);
+                    window.location.assign(url);
+
+                    setTimeout(() => {
+                        btn.innerHTML = "⬇️ Tải Profile VIP";
+                        btn.style.pointerEvents = "auto";
+                    }, 2500);
+                }, 500);
             };
         }
 

@@ -256,11 +256,11 @@ async function createLink() {
     }
 
     const routeMap = {
-      download: { path: "/download.html", label: "Link 1 - Unlock Locket 15s" },
-      download2: { path: "/download2.html", label: "Link 2 - DNS Giữ Locket Gold" }
+      download: { path: "/v/", label: "Link 1 - Unlock Locket 15s" },
+      download2: { path: "/v2/", label: "Link 2 - DNS Giữ Locket Gold" }
     };
     const selectedRoute = routeMap[linkType] || routeMap.download;
-    const fullLink = location.origin + selectedRoute.path + "?id=" + encodeURIComponent(data.id);
+    const fullLink = location.origin + selectedRoute.path + encodeURIComponent(data.id);
     const expTime = data.exp;
     const createdAt = Date.now();
     const ttlText = formatDuration(ttlMinutes);
@@ -412,7 +412,7 @@ function startCountdown(expTime) {
 }
 
 function copyMessageTemplate(link, name, ttlText) {
-  const message = `Xin chào ${name}, đây là link cài đặt VIP của bạn:\n${link}\n\nLưu ý: Link sẽ tự hủy sau ${ttlText}. Bạn hãy cài đặt ngay nhé!`;
+  const message = `🎫 Thẻ VIP Locket - Dành riêng cho ${name}\n\n👉 Nhấn vào link để nhận cấu hình VIP:\n${link}\n\n⚠️ Lưu ý bảo mật:\n- Link này chỉ TẢI ĐƯỢC 1 LẦN DUY NHẤT để chống chia sẻ.\n- Vui lòng cài đặt luôn trên máy của bạn.\n- Link sẽ tự hủy sau ${ttlText}.`;
   copyText(message);
 }
 </script>

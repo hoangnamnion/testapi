@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hướng Dẫn VIP 15s</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root { --primary-gold: #D4AF37; --secondary-gold: #C5A028; --dark-bg: #121212; --card-bg: rgba(30, 30, 30, 0.8); --text-color: #ffffff; --accent-glow: rgba(212, 175, 55, 0.3); }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -200,14 +201,24 @@
                 btn.innerHTML = "⏳ Đang mở file cấu hình...";
                 btn.style.pointerEvents = "none";
                 
-                // Sử dụng window.location.assign để Safari hiển thị prompt cài profile
-                const url = "/api/download?id=" + encodeURIComponent(idParam);
-                window.location.assign(url);
+                // Hiệu ứng pháo hoa ăn mừng
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#d4af37', '#ffd700', '#ffffff']
+                });
                 
                 setTimeout(() => {
-                    btn.innerHTML = "⬇️ Tải Profile Locket";
-                    btn.style.pointerEvents = "auto";
-                }, 2500);
+                    // Sử dụng window.location.assign để Safari hiển thị prompt cài profile
+                    const url = "/api/download?id=" + encodeURIComponent(idParam);
+                    window.location.assign(url);
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = "⬇️ Tải Profile Locket";
+                        btn.style.pointerEvents = "auto";
+                    }, 2500);
+                }, 500); // Đợi 0.5s để pháo hoa nổ
             };
         }
 
