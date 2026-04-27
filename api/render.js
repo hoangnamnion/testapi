@@ -61,6 +61,7 @@ export default async function handler(req, res) {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${ogTitle}" />
     <meta name="twitter:description" content="${ogDesc}" />
+    <script>window.SERVER_ID = "${id}";</script>
   `;
 
   // Chèn meta tags ngay trước thẻ </head>

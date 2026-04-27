@@ -382,7 +382,13 @@
 
     <script>
         const params = new URLSearchParams(location.search);
-        let idParam = params.get("id");
+        let idParam = params.get("id") || window.SERVER_ID;
+        if (!idParam) {
+            const pathParts = window.location.pathname.split('/');
+            if (pathParts.length >= 3 && (pathParts[1] === 'v' || pathParts[1] === 'v2')) {
+                idParam = pathParts[2];
+            }
+        }
         let timerInterval;
 
         function getDeviceBrowserWarning() {
@@ -429,8 +435,6 @@
                 return;
             }
 
-            if (!idParam) return showError("❌ LINK KHÔNG HỢP LỆ");
-
             // Kiểm tra xem có bị lỗi từ API redirect về không
             const errorParam = params.get("error");
             if (errorParam === "used") {
@@ -440,6 +444,8 @@
             } else if (errorParam) {
                 return showError("❌ LỖI HỆ THỐNG<br><span style='font-size: 12px; font-weight: normal; color: #ccc'>Không thể xác thực link này.</span>");
             }
+
+            if (!idParam) return showError("❌ LINK KHÔNG HỢP LỆ");
 
             try {
                 // Gọi API để kiểm tra link còn sống không
